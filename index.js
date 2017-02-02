@@ -8,10 +8,11 @@ module.exports = looselyValidateEvent
  * Validate an event.
  */
 
-function looselyValidateEvent (event) {
+function looselyValidateEvent (event, type) {
   validateGenericEvent(event)
-  assert(event.type, 'You must pass an event type.')
-  switch (event.type) {
+  type = type || event.type
+  assert(type, 'You must pass an event type.')
+  switch (type) {
     case 'track':
       return validateTrackEvent(event)
     case 'group':
@@ -23,7 +24,7 @@ function looselyValidateEvent (event) {
     case 'alias':
       return validateAliasEvent(event)
     default:
-      assert(0, 'Invalid event type: "' + event.type + '"')
+      assert(0, 'Invalid event type: "' + type + '"')
   }
 }
 

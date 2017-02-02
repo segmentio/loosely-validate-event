@@ -36,6 +36,10 @@ test('requires an event type', t => {
   t.throws(() => {
     validate({})
   }, AssertionError)
+
+  t.throws(() => {
+    validate({ type: '' }, null)
+  }, AssertionError)
 })
 
 test('requires a valid event type', t => {
@@ -62,10 +66,9 @@ test('requires anonymousId or userId on track events', t => {
 
   t.notThrows(() => {
     validate({
-      type: 'track',
       event: 'Did Something',
       anonymousId: 'banana'
-    })
+    }, 'track')
   })
 
   t.notThrows(() => {
