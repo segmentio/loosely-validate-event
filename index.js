@@ -21,6 +21,8 @@ function looselyValidateEvent (event, type) {
       return validateIdentifyEvent(event)
     case 'page':
       return validatePageEvent(event)
+    case 'screen':
+      return validateScreenEvent(event)
     case 'alias':
       return validateAliasEvent(event)
     default:
@@ -59,6 +61,14 @@ function validateIdentifyEvent (event) {
  */
 
 function validatePageEvent (event) {
+  assert(event.anonymousId || event.userId, 'You must pass either an "anonymousId" or a "userId".')
+}
+
+/**
+ * Validate a "screen" event.
+ */
+
+function validateScreenEvent (event) {
   assert(event.anonymousId || event.userId, 'You must pass either an "anonymousId" or a "userId".')
 }
 

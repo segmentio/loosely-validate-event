@@ -205,7 +205,36 @@ test('requires anonymousId or userId on page events', t => {
   })
 })
 
-test('requires userId on page events', t => {
+test('requires anonymousId or userId on screen events', t => {
+  t.throws(() => {
+    validate({
+      type: 'screen'
+    })
+  }, 'You must pass either an "anonymousId" or a "userId".')
+
+  t.throws(() => {
+    validate({
+      type: 'screen',
+      fooId: 'banana'
+    })
+  }, 'You must pass either an "anonymousId" or a "userId".')
+
+  t.notThrows(() => {
+    validate({
+      type: 'screen',
+      anonymousId: 'banana'
+    })
+  })
+
+  t.notThrows(() => {
+    validate({
+      type: 'screen',
+      userId: 'banana'
+    })
+  })
+})
+
+test('requires userId on alias events', t => {
   t.throws(() => {
     validate({
       type: 'alias'
