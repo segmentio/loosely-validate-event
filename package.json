@@ -1,6 +1,8 @@
 {
   "name": "@segment/loosely-validate-event",
   "version": "2.0.0",
+  "license": "MIT",
+  "repository": "segmentio/loosely-validate-event",
   "main": "index.js",
   "scripts": {
     "test": "ava",
