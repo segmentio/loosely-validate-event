@@ -279,3 +279,45 @@ test('requires events to be < 32kb', t => {
     })
   })
 })
+
+test('requires events to have ISO8601 timestamps', t => {
+  t.notThrows(() => {
+    validate({
+      type: 'track',
+      event: 'Did Something',
+      userId: 'banana',
+      properties: {},
+      timestamp: '2018-06-04'
+    })
+  }, 'ISO8601 timestamp failed for date only')
+
+  t.notThrows(() => {
+    validate({
+      type: 'track',
+      event: 'Did Something',
+      userId: 'banana',
+      properties: {},
+      timestamp: '2012-12-02T00:30:12.984Z'  // sample from docs
+    })
+  }, 'ISO8601 timestamp parsing failed for tz Z notation')
+
+  t.notThrows(() => {
+    validate({
+      type: 'track',
+      event: 'Did Something',
+      userId: 'banana',
+      properties: {},
+      timestamp: '2018-06-04T15:50:38.353891+00:00'
+    })
+  }, 'ISO8601 timestamp failed for numeric tz')
+
+  t.notThrows(() => {
+    validate({
+      type: 'track',
+      event: 'Did Something',
+      userId: 'banana',
+      properties: {},
+      timestamp: '20180606T084611Z'
+    })
+  }, 'ISO8601 timestamp failed for non separated format')
+})

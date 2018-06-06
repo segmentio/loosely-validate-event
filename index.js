@@ -119,6 +119,9 @@ function validateGenericEvent (event) {
     if (type(rule) !== 'array') {
       rule = [ rule ]
     }
+    if (key === 'timestamp') {
+      val = new Date(val)
+    }
     var a = rule[0] === 'object' ? 'an' : 'a'
     assert(
       rule.some(function (e) { return type(val) === e }),
