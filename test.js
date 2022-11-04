@@ -9,7 +9,9 @@ test('requires "anonymousId" to be a string or number', t => {
   }
   t.throws(() => {
     validate(event)
-  }, '"anonymousId" must be a string or number.')
+  }, 
+  undefined, 
+  '"anonymousId" must be a string or number.')
 })
 
 test('requires "category" to be a string', t => {
@@ -19,7 +21,9 @@ test('requires "category" to be a string', t => {
   }
   t.throws(() => {
     validate(event)
-  }, '"category" must be a string.')
+  }, 
+  undefined,
+  '"category" must be a string.')
 })
 
 test('requires "integrations" to be an object', t => {
@@ -29,23 +33,27 @@ test('requires "integrations" to be an object', t => {
   }
   t.throws(() => {
     validate(event)
-  }, '"integrations" must be an object.')
+  }, 
+  undefined,
+  '"integrations" must be an object.')
 })
 
 test('requires an event type', t => {
   t.throws(() => {
     validate({})
-  }, AssertionError)
+  }, { instanceOf: AssertionError })
 
   t.throws(() => {
     validate({ type: '' }, null)
-  }, AssertionError)
+  }, {instanceOf: AssertionError })
 })
 
 test('requires a valid event type', t => {
   t.throws(() => {
     validate({ type: 'banana' })
-  }, 'Invalid event type: "banana"')
+  }, 
+  undefined,
+  'Invalid event type: "banana"')
 })
 
 test('requires anonymousId or userId on track events', t => {
@@ -54,7 +62,9 @@ test('requires anonymousId or userId on track events', t => {
       type: 'track',
       event: 'Did Something'
     })
-  }, 'You must pass either an "anonymousId" or a "userId".')
+  }, 
+  undefined,
+  'You must pass either an "anonymousId" or a "userId".')
 
   t.throws(() => {
     validate({
@@ -62,7 +72,9 @@ test('requires anonymousId or userId on track events', t => {
       event: 'Did Something',
       fooId: 'banana'
     })
-  }, 'You must pass either an "anonymousId" or a "userId".')
+  }, 
+  undefined,
+  'You must pass either an "anonymousId" or a "userId".')
 
   t.notThrows(() => {
     validate({
@@ -86,7 +98,9 @@ test('requires event on track events', t => {
       type: 'track',
       userId: 'banana'
     })
-  }, 'You must pass an "event".')
+  }, 
+  undefined,
+  'You must pass an "event".')
 
   t.notThrows(() => {
     validate({
@@ -103,7 +117,9 @@ test('requires anonymousId or userId on group events', t => {
       type: 'group',
       groupId: 'foo'
     })
-  }, 'You must pass either an "anonymousId" or a "userId".')
+  }, 
+  undefined,
+  'You must pass either an "anonymousId" or a "userId".')
 
   t.throws(() => {
     validate({
@@ -111,7 +127,9 @@ test('requires anonymousId or userId on group events', t => {
       groupId: 'foo',
       fooId: 'banana'
     })
-  }, 'You must pass either an "anonymousId" or a "userId".')
+  }, 
+  undefined,
+  'You must pass either an "anonymousId" or a "userId".')
 
   t.notThrows(() => {
     validate({
@@ -136,7 +154,9 @@ test('requires groupId on group events', t => {
       type: 'group',
       userId: 'banana'
     })
-  }, 'You must pass a "groupId".')
+  }, 
+  undefined,
+  'You must pass a "groupId".')
 
   t.notThrows(() => {
     validate({
@@ -152,14 +172,18 @@ test('requires anonymousId or userId on identify events', t => {
     validate({
       type: 'identify'
     })
-  }, 'You must pass either an "anonymousId" or a "userId".')
+  }, 
+  undefined,
+  'You must pass either an "anonymousId" or a "userId".')
 
   t.throws(() => {
     validate({
       type: 'identify',
       fooId: 'banana'
     })
-  }, 'You must pass either an "anonymousId" or a "userId".')
+  }, 
+  undefined,
+  'You must pass either an "anonymousId" or a "userId".')
 
   t.notThrows(() => {
     validate({
@@ -181,14 +205,18 @@ test('requires anonymousId or userId on page events', t => {
     validate({
       type: 'page'
     })
-  }, 'You must pass either an "anonymousId" or a "userId".')
+  }, 
+  undefined,
+  'You must pass either an "anonymousId" or a "userId".')
 
   t.throws(() => {
     validate({
       type: 'page',
       fooId: 'banana'
     })
-  }, 'You must pass either an "anonymousId" or a "userId".')
+  }, 
+  undefined,
+  'You must pass either an "anonymousId" or a "userId".')
 
   t.notThrows(() => {
     validate({
@@ -210,14 +238,18 @@ test('requires anonymousId or userId on screen events', t => {
     validate({
       type: 'screen'
     })
-  }, 'You must pass either an "anonymousId" or a "userId".')
+  }, 
+  undefined,
+  'You must pass either an "anonymousId" or a "userId".')
 
   t.throws(() => {
     validate({
       type: 'screen',
       fooId: 'banana'
     })
-  }, 'You must pass either an "anonymousId" or a "userId".')
+  }, 
+  undefined,
+  'You must pass either an "anonymousId" or a "userId".')
 
   t.notThrows(() => {
     validate({
@@ -239,14 +271,18 @@ test('requires userId on alias events', t => {
     validate({
       type: 'alias'
     })
-  }, 'You must pass a "userId".')
+  }, 
+  undefined,
+  'You must pass a "userId".')
 
   t.throws(() => {
     validate({
       type: 'alias',
       fooId: 'banana'
     })
-  }, 'You must pass a "userId".')
+  }, 
+  undefined,
+  'You must pass a "userId".')
 
   t.notThrows(() => {
     validate({
@@ -269,7 +305,9 @@ test('requires events to be < 32kb', t => {
       event.properties[i] = 'a'
     }
     validate(event)
-  }, 'Your message must be < 32kb.')
+  }, 
+  undefined,
+  'Your message must be < 32kb.')
 
   t.notThrows(() => {
     validate({
